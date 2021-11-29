@@ -11,9 +11,14 @@ namespace AOC2017.PuzzleSolvers
         {
             var calculator = new SpiralMemoryCalculator();
 
-            int index =  calculator.GetSpiralIndexForLocation(22);
+            int value = 312051;
 
-            return index.ToString();
+            (int squareSize, int minValue, int maxValue) =  calculator.GetSquareDetailsForValue(value);
+            (int topRight, int topLeft, int bottomLeft) = calculator.GetSquareEdgeValues(squareSize, minValue);
+
+            int manhattenDistance = calculator.CalculateDistance(value, topRight, topLeft, bottomLeft, maxValue);
+
+            return manhattenDistance.ToString();
         }
 
         public string SolvePuzzlePart2()
