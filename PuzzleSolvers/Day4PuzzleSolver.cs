@@ -1,6 +1,7 @@
 ﻿using AOC2017.Utility;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 
 namespace AOC2017.PuzzleSolvers
@@ -44,7 +45,38 @@ namespace AOC2017.PuzzleSolvers
 
         public string SolvePuzzlePart2()
         {
-            throw new NotImplementedException();
+            string[] inputLines = InputFilesHelper.GetInputFileLines("day4.txt");
+
+            int numOfValidPassphrases = 0;
+
+            foreach (string line in inputLines)
+            {
+                if (IsAnagramValidPassPhrase(line))
+                {
+                    numOfValidPassphrases++;
+                }
+            }
+            return numOfValidPassphrases.ToString();
+        }
+
+        private bool IsAnagramValidPassPhrase(string line)
+        {
+            string[] phrases = line.Split(' ');
+
+            var hashSet = new HashSet<string>();
+
+            foreach (string phrase in phrases)
+            {
+                string sortedString = string.Concat(phrase.OrderBy(c => c));
+
+                if (hashSet.Contains(sortedString))
+                {
+                    return false;
+                }
+                hashSet.Add(sortedString);
+            }
+
+            return true;
         }
     }
 }

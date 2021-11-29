@@ -9,7 +9,7 @@ namespace AOC2017
         {
             IPuzzleSolver solver = new Day4PuzzleSolver();
 
-            var solution = solver.SolvePuzzlePart1();
+            var solution = solver.SolvePuzzlePart2();
             Console.WriteLine($"The solution to the puzzle is: {solution}");
 
             Console.ReadKey();
