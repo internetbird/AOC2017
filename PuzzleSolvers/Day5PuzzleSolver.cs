@@ -14,13 +14,49 @@ namespace AOC2017.PuzzleSolvers
 
             int[] instructions = inputLines.Select(line => int.Parse(line)).ToArray();
 
+            int numOfSteps = 0;
+            int currPosition = 0;
 
-            return string.Empty;
+            while(currPosition < instructions.Length)
+            {
+                int jumpValue = instructions[currPosition];
+
+                instructions[currPosition]++;
+                currPosition += jumpValue;
+
+                numOfSteps++;
+            }
+
+            return numOfSteps.ToString();
         }
 
         public string SolvePuzzlePart2()
         {
-            throw new NotImplementedException();
+            string[] inputLines = InputFilesHelper.GetInputFileLines("day5.txt");
+
+            int[] instructions = inputLines.Select(line => int.Parse(line)).ToArray();
+
+            int numOfSteps = 0;
+            int currPosition = 0;
+
+            while (currPosition < instructions.Length)
+            {
+                int jumpValue = instructions[currPosition];
+
+                if(jumpValue >= 3)
+                {
+                    instructions[currPosition]--;
+                } else
+                {
+                    instructions[currPosition]++;
+                }
+
+                currPosition += jumpValue;
+
+                numOfSteps++;
+            }
+
+            return numOfSteps.ToString();
         }
     }
 }
