@@ -1,4 +1,4 @@
-﻿using AOC2017.Utility;
+﻿using AOC;
 using System;
 using System.Collections.Generic;
 using System.Linq;

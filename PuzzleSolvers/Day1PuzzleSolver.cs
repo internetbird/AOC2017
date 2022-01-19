@@ -1,5 +1,5 @@
-﻿using AOC2017.Logic;
-using AOC2017.Utility;
+﻿using AOC;
+using AOC2017.Logic;
 using System;
 using System.Collections.Generic;
 using System.Text;
