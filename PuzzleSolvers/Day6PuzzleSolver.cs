@@ -11,21 +11,34 @@ namespace AOC2017.PuzzleSolvers
     {
         public string SolvePuzzlePart1()
         {
-            string inputConfiguration = InputFilesHelper.GetInputFileText("day6.txt");
 
-           List<int> initialConfiguration = inputConfiguration.Split((char[])null, StringSplitOptions.RemoveEmptyEntries)
-                .Select(int.Parse).ToList();
+            MemoryBlocksSimulator simulator = CreateNewSimulator();
 
-            var simulator = new MemoryBlocksSimulator(initialConfiguration);
-
-            int numOfRedistrubutions = simulator.Run();
+            (int numOfRedistrubutions, _) = simulator.Run();
 
             return numOfRedistrubutions.ToString();
         }
 
         public string SolvePuzzlePart2()
         {
-            throw new NotImplementedException();
+            MemoryBlocksSimulator simulator = CreateNewSimulator();
+
+            (_, int loopLength) = simulator.Run();
+
+            return loopLength.ToString();
+        }
+
+
+        private MemoryBlocksSimulator CreateNewSimulator()
+        {
+            string inputConfiguration = InputFilesHelper.GetInputFileText("day6.txt");
+
+            List<int> initialConfiguration = inputConfiguration.Split((char[])null, StringSplitOptions.RemoveEmptyEntries)
+                 .Select(int.Parse).ToList();
+
+            var simulator = new MemoryBlocksSimulator(initialConfiguration);
+
+            return simulator;
         }
     }
 }

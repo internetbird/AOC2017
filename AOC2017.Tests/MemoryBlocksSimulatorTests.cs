@@ -16,9 +16,20 @@ namespace AOC2017.Tests
         {
             var initialConfiguration = new List<int> { 0, 2, 7, 0 };
             var simulator = new MemoryBlocksSimulator(initialConfiguration);
-            int redistributionCount = simulator.Run();
+            (int redistributionCount, _) = simulator.Run();
 
             Assert.AreEqual(5, redistributionCount);
+        }
+
+        [TestMethod]
+        public void TestLoopLength()
+        {
+            var initialConfiguration = new List<int> { 0, 2, 7, 0 };
+            var simulator = new MemoryBlocksSimulator(initialConfiguration);
+
+            (_, int loopLength) = simulator.Run();
+
+            Assert.AreEqual(4, loopLength);
         }
     }
 }

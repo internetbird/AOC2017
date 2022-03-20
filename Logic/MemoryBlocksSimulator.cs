@@ -24,9 +24,10 @@ namespace AOC2017.Logic
         /// Runs the simulator until a similar configuration is repeated
         /// </summary>
         /// <returns>The number of memory redistributions</returns>
-        public int Run()        {
+        public (int numOfMemoryRedistributions, int loopLength) Run()        {
 
             int redistributionCounter = 0;
+            int loopLength = -1;
             bool sameConfigurationReached = false;
 
             while (!sameConfigurationReached)
@@ -34,9 +35,13 @@ namespace AOC2017.Logic
                 List<int> nextConfiguration = RedistributeBlocks();
                 redistributionCounter++;
 
-                if (ConfigurationHistoryContains(nextConfiguration))
+
+                (bool historyContainsConfiguraion, int historyIndex) = ConfigurationHistoryContains(nextConfiguration);
+
+                if (historyContainsConfiguraion)
                 {
                     sameConfigurationReached = true;
+                    loopLength = redistributionCounter - historyIndex;
 
                 } else
                 {
@@ -45,21 +50,22 @@ namespace AOC2017.Logic
                 }
             }
 
-            return redistributionCounter;
+            return (redistributionCounter, loopLength);
            
         }
 
-        private bool ConfigurationHistoryContains(List<int> nextConfiguration)
+        private (bool contains, int historyIndex) ConfigurationHistoryContains(List<int> nextConfiguration)
         {
-            foreach  (List<int> item in _configurationHistory)
+
+            for (int i = 0; i < _configurationHistory.Count; i++)
             {
-                if (ConfigurationAreTheSame(item, nextConfiguration))
+                if (ConfigurationAreTheSame(_configurationHistory[i], nextConfiguration))
                 {
-                    return true;
+                    return (true, i);
                 }
             }
 
-            return false;
+            return (false, -1);
         }
 
         private bool ConfigurationAreTheSame(List<int> item, List<int> nextConfiguration)
