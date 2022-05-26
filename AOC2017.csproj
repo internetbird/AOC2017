@@ -12,10 +12,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="InputFiles\" />
-  </ItemGroup>
-
-  <ItemGroup>
     <ProjectReference Include="..\..\..\..\Github\BirdLib\BirdLib\BirdLib.csproj" />
   </ItemGroup>
 
