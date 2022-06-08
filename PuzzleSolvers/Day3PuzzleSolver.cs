@@ -1,4 +1,5 @@
-﻿using AOC2017.Logic;
+﻿using AOC;
+using AOC2017.Logic;
 using System;
 using System.Collections.Generic;
 using System.Drawing;
