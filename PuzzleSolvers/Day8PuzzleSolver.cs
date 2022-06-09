@@ -19,13 +19,17 @@ namespace AOC2017.PuzzleSolvers
 
             var cpuSimulator = new CPUSimulator();
             await cpuSimulator.RunCommands(cpuCommands);
-            return cpuSimulator.GetMaxRegisterValue().ToString(); ;
+            return cpuSimulator.GetMaxRegisterValue().ToString(); 
 
         }
 
-        public Task<string> SolvePuzzlePart2()
+        public async Task<string> SolvePuzzlePart2()
         {
-            throw new NotImplementedException();
+            var cpuCommands = ParseInputFileCommands();
+            var cpuSimulator = new CPUSimulator();
+            await cpuSimulator.RunCommands(cpuCommands);
+
+            return cpuSimulator.GetMaxRegisterValueDuringExecution().ToString();
         }
 
 

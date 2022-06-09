@@ -11,6 +11,7 @@ namespace AOC2017.Logic
     public class CPUSimulator
     {
         private Dictionary<string, int> _registers = new Dictionary<string, int>();
+        private int _heighestRegisterValueDuringExecution = 0;
 
 
         public async Task RunCommands(List<CPUCommand> commands)
@@ -32,6 +33,11 @@ namespace AOC2017.Logic
                     } else
                     {
                         _registers[command.RegisterToUpdate] -= command.CommandOperand;
+                    }
+
+                    if (_registers[command.RegisterToUpdate] > _heighestRegisterValueDuringExecution)
+                    {
+                        _heighestRegisterValueDuringExecution = _registers[command.RegisterToUpdate];
                     }
                 }
             }
@@ -55,6 +61,8 @@ namespace AOC2017.Logic
             return _registers.Max(kvp => kvp.Value);
         }
 
+        public int GetMaxRegisterValueDuringExecution() => _heighestRegisterValueDuringExecution;
+     
 
     }
 }

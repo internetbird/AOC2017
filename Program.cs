@@ -12,7 +12,7 @@ namespace AOC2017
         {
             IAsyncPuzzleSolver solver = new Day8PuzzleSolver();
 
-            var solution =  await solver.SolvePuzzlePart1();
+            var solution =  await solver.SolvePuzzlePart2();
             Console.WriteLine($"The solution to the puzzle is: {solution}");
 
             Console.ReadKey();
