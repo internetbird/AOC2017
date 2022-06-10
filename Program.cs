@@ -8,11 +8,11 @@ namespace AOC2017
 {
     class Program
     {
-        static async Task Main(string[] args)
+        static void Main(string[] args)
         {
-            IAsyncPuzzleSolver solver = new Day8PuzzleSolver();
+            IPuzzleSolver solver = new Day9PuzzleSolver();
 
-            var solution =  await solver.SolvePuzzlePart2();
+            var solution =  solver.SolvePuzzlePart1();
             Console.WriteLine($"The solution to the puzzle is: {solution}");
 
             Console.ReadKey();
