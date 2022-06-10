@@ -28,14 +28,11 @@ namespace AOC2017.Logic
 
                 switch (currStreamChar)
                 {
-                    
                     case '{':
-
                         if (!inGarbageSection)
                         {
                             currScore++;
                         }
-                      
                         break;
                     case '}':
                         if (!inGarbageSection)
@@ -43,7 +40,6 @@ namespace AOC2017.Logic
                             totalScore += currScore;
                             currScore--;
                         }
-                      
                         break;
                     case '<':
                         inGarbageSection = true;
@@ -57,6 +53,52 @@ namespace AOC2017.Logic
                 }
             }
             return totalScore;
+        }
+
+
+        public int CountGarbageChars(string stream)
+        {
+         
+            int garbageCharsCount = 0;
+            bool inGarbageSection = false;
+            bool ignoreNextChar = false;
+
+            for (int i = 0; i < stream.Length; i++)
+            {
+                if (ignoreNextChar)
+                {
+                    ignoreNextChar = false;
+                    continue;
+                }
+
+                char currStreamChar = stream[i];
+
+                switch (currStreamChar)
+                {
+                    case '<':
+                        if (!inGarbageSection)
+                        {
+                            inGarbageSection = true;
+                        } else
+                        {
+                            garbageCharsCount++;
+                        }
+                        break;
+                    case '>':
+                        inGarbageSection = false;
+                        break;
+                    case '!':
+                        ignoreNextChar = true;
+                        break;
+                    default:
+                        if (inGarbageSection)
+                        {
+                            garbageCharsCount++;
+                        }
+                        break;
+                }
+            }
+            return garbageCharsCount;
         }
     }
 }

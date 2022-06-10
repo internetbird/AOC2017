@@ -111,5 +111,76 @@ namespace AOC2017.Tests
 
             Assert.AreEqual(3, score);
         }
+
+        [TestMethod]
+        public void TestGarbageCount1()
+        {
+            var calculator = new StreamScoreCalculator();
+
+            int count = calculator.CountGarbageChars("<>");
+
+            Assert.AreEqual(0, count);
+        }
+
+        [TestMethod]
+        public void TestGarbageCount2()
+        {
+            var calculator = new StreamScoreCalculator();
+
+            int count = calculator.CountGarbageChars("<random characters>");
+
+            Assert.AreEqual(17, count);
+        }
+
+        [TestMethod]
+        public void TestGarbageCount3()
+        {
+            var calculator = new StreamScoreCalculator();
+
+            int count = calculator.CountGarbageChars("<<<<>");
+
+            Assert.AreEqual(3, count);
+        }
+
+        [TestMethod]
+        public void TestGarbageCount4()
+        {
+            var calculator = new StreamScoreCalculator();
+
+            int count = calculator.CountGarbageChars("<{!>}>");
+
+            Assert.AreEqual(2, count);
+        }
+
+        [TestMethod]
+        public void TestGarbageCount5()
+        {
+            var calculator = new StreamScoreCalculator();
+
+            int count = calculator.CountGarbageChars("<!!>");
+
+            Assert.AreEqual(0, count);
+        }
+
+        [TestMethod]
+        public void TestGarbageCount6()
+        {
+            var calculator = new StreamScoreCalculator();
+
+            int count = calculator.CountGarbageChars("<!!!>>");
+
+            Assert.AreEqual(0, count);
+        }
+
+        [TestMethod]
+        public void TestGarbageCount7()
+        {
+            var calculator = new StreamScoreCalculator();
+
+            int count = calculator.CountGarbageChars("<{o\"i!a,<{i<a>");
+
+            Assert.AreEqual(10, count);
+        }
+
     }
 }

@@ -23,7 +23,13 @@ namespace AOC2017.PuzzleSolvers
 
         public string SolvePuzzlePart2()
         {
-            throw new NotImplementedException();
+            var inputText = InputFilesHelper.GetInputFileText("day9.txt");
+
+            var calculator = new StreamScoreCalculator();
+
+            int score = calculator.CountGarbageChars(inputText);
+
+            return score.ToString();
         }
     }
 }
