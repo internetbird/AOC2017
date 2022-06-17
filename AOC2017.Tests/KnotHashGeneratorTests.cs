@@ -19,7 +19,7 @@ namespace AOC2017.Tests
             var inputLengths = new List<int> { 3, 4, 1, 5 };
             var expectedResult = new List<int> { 3, 4, 2, 1, 0 };
 
-            List<int> hashResult = hashGenerator.GenerateHash(inputLengths);
+            List<int> hashResult = hashGenerator.GenerateHashSequence(inputLengths);
 
             Assert.IsTrue(hashResult.SequenceEqual(expectedResult));
         }

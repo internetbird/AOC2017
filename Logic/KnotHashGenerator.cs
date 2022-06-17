@@ -18,7 +18,7 @@ namespace AOC2017.Logic
         }
 
 
-        public List<int> GenerateHash(List<int> lengths)
+        public List<int> GenerateHashSequence(List<int> lengths)
         {
             int currentPosition = 0;
             int skipSize = 0;
@@ -28,7 +28,7 @@ namespace AOC2017.Logic
             for (int i = 0; i < lengths.Count; i++)
             {
                 int currLength = lengths[i];
-                hash = CalculateNextHashStep(hash, currentPosition, currLength);
+                hash = CalculateNextHashSequence(hash, currentPosition, currLength);
                 currentPosition = (currentPosition + currLength + skipSize) % _numOfElements;
                 skipSize++;
             }
@@ -36,7 +36,49 @@ namespace AOC2017.Logic
             return hash;
         }
 
-        private List<int> CalculateNextHashStep(List<int> hash, int currentPosition,  int length)
+        public string GenerateHash(List<int> lengths)
+        {
+            int currentPosition = 0;
+            int skipSize = 0;
+
+            List<int> hashSequence = ListCrow.GenerateIntegerSequence(0, _numOfElements - 1);
+
+            for (int round = 0; round < 64; round++)
+            {
+                for (int i = 0; i < lengths.Count; i++)
+                {
+                    int currLength = lengths[i];
+                    hashSequence = CalculateNextHashSequence(hashSequence, currentPosition, currLength);
+                    currentPosition = (currentPosition + currLength + skipSize) % _numOfElements;
+                    skipSize++;
+                }
+            }
+
+            var resultHash = string.Empty;
+
+            for (int i = 0; i < _numOfElements; i+=16)
+            {
+                var currBlock = hashSequence.Skip(i).Take(16);
+                resultHash += GetHexBitwiseXORValue(currBlock);
+            }
+
+            return resultHash;
+        }
+
+        private string GetHexBitwiseXORValue(IEnumerable<int> currBlock)
+        {
+            int xorValue = 0;
+
+            foreach (var item in currBlock)
+            {
+                xorValue = xorValue ^ item;
+            }
+
+            var hexString = Convert.ToString(xorValue, 16).PadLeft(2, '0');
+            return hexString;
+        }
+
+        private List<int> CalculateNextHashSequence(List<int> hash, int currentPosition,  int length)
         {
             var nextHash = hash.ReversePart(currentPosition, length);
             return nextHash;
