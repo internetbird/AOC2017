@@ -13,6 +13,14 @@ namespace AOC2017.PuzzleSolvers
     {
         public string SolvePuzzlePart1()
         {
+            Graph graph = GetInputGraph();
+            HashSet<int> reachableNodes = graph.GetReachableNodesFrom(0);
+
+            return reachableNodes.Count.ToString();
+        }
+
+        private Graph GetInputGraph()
+        {
             var inputFileLines = InputFilesHelper.GetInputFileLines("day12.txt");
 
             var edges = new List<Edge>();
@@ -24,9 +32,7 @@ namespace AOC2017.PuzzleSolvers
             }
 
             var graph = new Graph(edges);
-            HashSet<int> reachableNodes = graph.GetReachableNodesFrom(0);
-
-            return reachableNodes.Count.ToString();
+            return graph;
         }
 
 
@@ -57,7 +63,22 @@ namespace AOC2017.PuzzleSolvers
 
         public string SolvePuzzlePart2()
         {
-            throw new NotImplementedException();
+            Graph graph = GetInputGraph();
+
+            int numOfGroups = 0;
+            var nodesInGroups = new List<int>();
+
+            for (int i = 0; i < 2000; i++)
+            {
+                if (!nodesInGroups.Contains(i))
+                {
+                    HashSet<int> reachableNodes = graph.GetReachableNodesFrom(i);
+                    numOfGroups++;
+                    nodesInGroups.AddRange(reachableNodes);
+                }
+            }
+
+            return numOfGroups.ToString();
         }
     }
 }
