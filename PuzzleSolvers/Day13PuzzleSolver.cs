@@ -27,7 +27,21 @@ namespace AOC2017.PuzzleSolvers
 
         public string SolvePuzzlePart2()
         {
-            throw new NotImplementedException();
+            string[] inputLines = InputFilesHelper.GetInputFileLines("day13.txt");
+
+            List<FirewallLayer> firewallLayers = inputLines.Select(FirewallLayerParser.ParseLine).ToList();
+
+            var simulator = new FirewallSimulator(firewallLayers);
+            int delay = 0;
+            bool success = simulator.RunPassThrough(delay);
+
+            while(!success)
+            {
+                delay++;
+                success = simulator.RunPassThrough(delay);
+            }
+            
+            return delay.ToString();
         }
     }
 }

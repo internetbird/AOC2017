@@ -17,15 +17,15 @@ namespace AOC2017.Logic
             _layers = layers;
         }
 
-        private FirewallState GetInitialState(List<FirewallLayer> layers)
+        private FirewallState GetInitialState(List<FirewallLayer> layers, int delay = 0)
         {
             var state = new FirewallState();
 
             foreach (var layer in layers)
             {
                 var scannerPosition = new ScannerPosition();
-                scannerPosition.MoveDirection = VerticalDirection.Up;
-                scannerPosition.PositionIndex = 0;
+                scannerPosition.MoveDirection = GetInitialMoveDirection(delay, layer.Range);
+                scannerPosition.PositionIndex = GetInitialPositionIndex(delay, layer.Range);
                 scannerPosition.LayerRange = layer.Range;
                 scannerPosition.LayerIndex = layer.Depth;
 
@@ -33,6 +33,27 @@ namespace AOC2017.Logic
             }
 
             return state;
+        }
+
+
+        private VerticalDirection GetInitialMoveDirection(int delay, int range)
+        {
+            int singleCyclePosition = delay % ((range - 1) * 2);
+            return singleCyclePosition < (range - 1) ? VerticalDirection.Up : VerticalDirection.Down;
+        }
+
+        private int GetInitialPositionIndex(int delay, int range)
+        {
+            int singleCyclePosition =  delay % ((range-1)*2);
+
+            if (singleCyclePosition < range)
+            {
+                return singleCyclePosition;
+            } else
+            {
+                return ((range-1) * 2) - singleCyclePosition;
+            }
+
         }
 
 
@@ -56,6 +77,32 @@ namespace AOC2017.Logic
             }
             return totalSeverity;
         }
+        /// <summary>
+        /// Runs a pass-through simulation
+        /// </summary>
+        /// <param name="delay"></param>
+        /// <returns>True is the passthrough was successful, false otherwise</returns>
+        public bool RunPassThrough(int delay = 0)
+        {
+            FirewallState state = GetInitialState(_layers, delay);
+
+            var maxDepth = _layers.Max(layer => layer.Depth);
+
+            for (int i = 0; i <= maxDepth; i++)
+            {
+                bool isCaught =  IsCaughtAt(i, state);
+                
+                if(isCaught)
+                {
+                    return false;
+                }
+
+                state = CalculateNextState(state);
+            }
+
+            return true;
+
+        }
 
         private int GetSeverityFor(int layerIndex, FirewallState state)
         {
@@ -66,6 +113,12 @@ namespace AOC2017.Logic
             }
 
             return 0;
+        }
+
+        private bool IsCaughtAt(int layerIndex, FirewallState state)
+        {
+            ScannerPosition position = state.GetScannerPositionForLayer(layerIndex);
+            return position != null && position.PositionIndex == 0;
         }
 
         private FirewallState CalculateNextState(FirewallState state)
