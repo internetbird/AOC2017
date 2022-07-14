@@ -1,2 +1,2 @@
 # AOC2017
-C# / .NET Core solutions to Adevne of Code 2017 event
+C# / .NET Core solutions to Advent of Code 2017 event
