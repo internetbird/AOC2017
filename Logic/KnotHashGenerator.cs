@@ -36,8 +36,10 @@ namespace AOC2017.Logic
             return hash;
         }
 
-        public string GenerateHash(List<int> lengths)
+        public string GenerateHash(string word)
         {
+            List<int> lengths = ConvertToASCIISequence(word);
+
             int currentPosition = 0;
             int skipSize = 0;
 
@@ -65,6 +67,13 @@ namespace AOC2017.Logic
             return resultHash;
         }
 
+        public string GenerateHashAsBinary(string word)
+        {
+            string hexHash = GenerateHash(word);
+            string binaryHash = StringHawk.ConvertHexStringToBinaryString(hexHash);
+            return binaryHash;
+        }
+
         private string GetHexBitwiseXORValue(IEnumerable<int> currBlock)
         {
             int xorValue = 0;
@@ -82,6 +91,20 @@ namespace AOC2017.Logic
         {
             var nextHash = hash.ReversePart(currentPosition, length);
             return nextHash;
+        }
+
+        private List<int> ConvertToASCIISequence(string inputText)
+        {
+            var sequence = new List<int>();
+
+            for (int i = 0; i < inputText.Length; i++)
+            {
+                sequence.Add((int)inputText[i]);
+            }
+
+            sequence.AddRange(new List<int> { 17, 31, 73, 47, 23 });
+
+            return sequence;
         }
     }
 }

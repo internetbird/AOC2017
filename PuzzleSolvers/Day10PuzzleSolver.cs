@@ -26,27 +26,11 @@ namespace AOC2017.PuzzleSolvers
 
         public string SolvePuzzlePart2()
         {
-
-            List<int> lengths = ConvertToASCIISequence("157,222,1,2,177,254,0,228,159,140,249,187,255,51,76,30");
-
             var hashGenerator = new KnotHashGenerator();
-
-            string hash = hashGenerator.GenerateHash(lengths);
+            string hash = hashGenerator.GenerateHash("157,222,1,2,177,254,0,228,159,140,249,187,255,51,76,30");
             return hash;
         }
 
-        private List<int> ConvertToASCIISequence(string inputText)
-        {
-            var sequence = new List<int>();
-
-            for (int i = 0; i < inputText.Length; i++)
-            {
-                sequence.Add((int)inputText[i]);
-            }
-
-            sequence.AddRange(new List<int> { 17, 31, 73, 47, 23 });
-
-            return sequence;
-        }
+      
     }
 }
