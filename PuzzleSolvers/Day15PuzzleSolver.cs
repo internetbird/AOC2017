@@ -58,17 +58,49 @@ namespace AOC2017.PuzzleSolvers
                 .SequenceEqual(bValueBinary.TakeLast(16));
         }
 
-        private int CalculateNextValue(int prevValue, int factor)
+        private int CalculateNextValue(int prevValue, int factor, int?  divisiableBy = null)
         {
            ulong ulongPrevValue = Convert.ToUInt64(prevValue);
            ulong ulongFactor = Convert.ToUInt64(factor);
 
-            return (int)((ulongPrevValue * ulongFactor) % 2147483647);
+            int nextValue = (int)((ulongPrevValue * ulongFactor) % 2147483647);
+
+            while(divisiableBy.HasValue && (nextValue % divisiableBy.Value != 0))
+            {
+                ulongPrevValue = Convert.ToUInt64(nextValue);
+                nextValue = (int)((ulongPrevValue * ulongFactor) % 2147483647);
+            }
+
+            return nextValue;
         }
 
         public string SolvePuzzlePart2()
         {
-            throw new NotImplementedException();
+            int judgeCount = 0;
+
+            int generatorAPrevValue = GeneratorAInitialValue;
+            int generatorBPrevValue = GeneratorBInitialValue;
+
+            for (int i = 0; i < 5_000_000; i++)
+            {
+                int generatorAValue = CalculateNextValue(generatorAPrevValue, GeneratorAFactor, 4);
+                int generatorBValue = CalculateNextValue(generatorBPrevValue, GeneratorBFactor, 8);
+
+                if (IsLowest16BitMatch(generatorAValue, generatorBValue))
+                {
+                    judgeCount++;
+                }
+
+                generatorAPrevValue = generatorAValue;
+                generatorBPrevValue = generatorBValue;
+
+                if (i % 100_000 == 0)
+                {
+                    Console.WriteLine($"Calculated {i} value pairs, judgeCount = {judgeCount}");
+                }
+            }
+
+            return judgeCount.ToString();
         }
     }
 }
