@@ -55,7 +55,44 @@ namespace AOC2017.PuzzleSolvers
 
         public string SolvePuzzlePart2()
         {
-            throw new NotImplementedException();
+            var permutationsDict = new Dictionary<string, string>();
+
+            string programsPositions = "abcdefghijklmnop";
+
+            string inputText = InputFilesHelper.GetInputFileText("day16.txt");
+
+            string[] moves = inputText.Split(',', StringSplitOptions.RemoveEmptyEntries);
+
+
+
+            for (int i = 0; i < 1000000000; i++)
+            {
+
+                if (i % 1000000 == 0)
+                {
+                    Console.WriteLine($"After {i} iterations the positions are: {programsPositions}");
+                }
+
+                if (permutationsDict.ContainsKey(programsPositions))
+                {
+                    programsPositions = permutationsDict[programsPositions];
+                    continue;
+                }
+
+                string initialPosition = programsPositions;
+
+                foreach (string move in moves)
+                {
+                    programsPositions = ExecuteMove(programsPositions, move);
+
+                }
+
+                string finalPosition = programsPositions;
+
+                permutationsDict.Add(initialPosition, finalPosition);
+            }
+
+            return programsPositions;
         }
     }
 }
