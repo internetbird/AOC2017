@@ -36,7 +36,26 @@ namespace AOC2017.PuzzleSolvers
 
         public string SolvePuzzlePart2()
         {
-            throw new NotImplementedException();
+          
+            int currIndex = 1;
+            int indexOfZero = 0;
+            int numAfterZero = 1;
+            for (int i = 2; i < 50000000; i++)
+            {
+                int nextIndex = GetNextIndex(currIndex, i);
+                if (nextIndex == indexOfZero + 1)
+                {
+                    numAfterZero = i;
+                }
+
+                if(nextIndex <= indexOfZero)
+                {
+                    indexOfZero++;
+                }
+              
+                currIndex = nextIndex;
+            }
+            return numAfterZero.ToString();
         }
     }
 }
