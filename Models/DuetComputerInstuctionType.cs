@@ -8,6 +8,7 @@ namespace AOC2017.Models
 {
     public enum DuetComputerInstuctionType
     {
+        NotSet,
         PlaySound,
         SetValue,
         Add,

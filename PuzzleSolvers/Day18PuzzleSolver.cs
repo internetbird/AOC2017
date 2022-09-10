@@ -20,7 +20,7 @@ namespace AOC2017.PuzzleSolvers
             computer.LoadProgram(programLines);
             computer.ExcuteProgram();
 
-            return string.Empty;
+            return computer.GetFirstRecoveredFrequency().ToString();
         }
 
         public string SolvePuzzlePart2()
