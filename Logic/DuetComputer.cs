@@ -12,8 +12,8 @@ namespace AOC2017.Logic
     public class DuetComputer : ComputerSimulator<DuetComputerInstruction, DuetComputerInstuctionType>
     {
 
-        private int? _lastFrequencyPlayed = null;
-        private int? _firstRecoveredFrequency = null;
+        private long? _lastFrequencyPlayed = null;
+        private long? _firstRecoveredFrequency = null;
 
         public DuetComputer(DuetComputerInstructionParser parser) : base(parser){}
 
@@ -22,35 +22,35 @@ namespace AOC2017.Logic
             switch (instructionToExecute.Type)
             {
                 case DuetComputerInstuctionType.PlaySound:
-                    int frequencyToPlay = GetOperandValue(instructionToExecute.Operand1);
+                    long frequencyToPlay = GetOperandValue(instructionToExecute.Operand1);
                     _lastFrequencyPlayed = frequencyToPlay;
                     _programCounter++;
                     break;
                 case DuetComputerInstuctionType.SetValue:
-                    int valueToSet = GetOperandValue(instructionToExecute.Operand2);
+                    long valueToSet = GetOperandValue(instructionToExecute.Operand2);
                     SetRegisterValue(instructionToExecute.Operand1, valueToSet);
                     _programCounter++;
                     break;
                 case DuetComputerInstuctionType.Add:
-                    int valueToAdd = GetOperandValue(instructionToExecute.Operand2);
-                    int addedRegsiter = GetRegisterValue(instructionToExecute.Operand1) + valueToAdd;
+                    long valueToAdd = GetOperandValue(instructionToExecute.Operand2);
+                    long addedRegsiter = GetRegisterValue(instructionToExecute.Operand1) + valueToAdd;
                     SetRegisterValue(instructionToExecute.Operand1, addedRegsiter);
                     _programCounter++;
                     break;
                 case DuetComputerInstuctionType.Multiply:
-                    int valueToMultiply = GetOperandValue(instructionToExecute.Operand2);
-                    int multipliedRegister = GetRegisterValue(instructionToExecute.Operand1) * valueToMultiply;
+                    long valueToMultiply = GetOperandValue(instructionToExecute.Operand2);
+                    long multipliedRegister = GetRegisterValue(instructionToExecute.Operand1) * valueToMultiply;
                     SetRegisterValue(instructionToExecute.Operand1, multipliedRegister);
                     _programCounter++;
                     break;
                 case DuetComputerInstuctionType.Modulo:
-                    int valueToModulo = GetOperandValue(instructionToExecute.Operand2);
-                    int moduloRegister = GetRegisterValue(instructionToExecute.Operand1) % valueToModulo;
+                    long valueToModulo = GetOperandValue(instructionToExecute.Operand2);
+                    long moduloRegister = GetRegisterValue(instructionToExecute.Operand1) % valueToModulo;
                     SetRegisterValue(instructionToExecute.Operand1, moduloRegister);
                     _programCounter++;
                     break;
                 case DuetComputerInstuctionType.RecoverFrequency:
-                    int valueToRecoverFrequency = GetOperandValue(instructionToExecute.Operand1);
+                    long valueToRecoverFrequency = GetOperandValue(instructionToExecute.Operand1);
                     if (valueToRecoverFrequency != 0 && _firstRecoveredFrequency == null)
                     {
                         _firstRecoveredFrequency = _lastFrequencyPlayed;
@@ -62,10 +62,10 @@ namespace AOC2017.Logic
                    
                     break;
                 case DuetComputerInstuctionType.JumpGreaterThenZero:
-                    int checkGreaterThenZero = GetOperandValue(instructionToExecute.Operand1);
+                    long checkGreaterThenZero = GetOperandValue(instructionToExecute.Operand1);
                     if (checkGreaterThenZero > 0)
                     {
-                        _programCounter += GetOperandValue(instructionToExecute.Operand2);
+                        _programCounter += (int)GetOperandValue(instructionToExecute.Operand2);
                     } else
                     {
                         _programCounter++;
@@ -74,7 +74,7 @@ namespace AOC2017.Logic
             }
         }
 
-        public int GetFirstRecoveredFrequency() => _firstRecoveredFrequency.Value;
+        public long GetFirstRecoveredFrequency() => _firstRecoveredFrequency.Value;
 
     }
 }
