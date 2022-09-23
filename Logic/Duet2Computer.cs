@@ -15,7 +15,7 @@ namespace AOC2017.Logic
         private Queue<long> _valuesQueue = new Queue<long>();
         private Duet2Computer _valuesReceiver;
   
-        private Duet2ComputerState _state;
+        private Duet2ComputerState _state = Duet2ComputerState.Running;
         private int _valuesSentCounter = 0;
 
         public Duet2Computer(Duet2ComputerInstructionParser parser, int programID) : base(parser) 
@@ -28,13 +28,17 @@ namespace AOC2017.Logic
             _valuesQueue.Enqueue(value);
         }
 
-        public void SetValueReceiver(Duet2Computer receiver)
+        protected override Duet2ComputerInstruction GetNextInstructionToExecute()
         {
-            _valuesReceiver = receiver;
+            if (_state == Duet2ComputerState.Running)
+            {
+                return base.GetNextInstructionToExecute();
+            } else
+            {
+                return null;
+            }
         }
 
-        public int GetValuesSentCounter() => _valuesSentCounter;
-        
         protected override void ExecuteInsturction(Duet2ComputerInstruction instructionToExecute)
         {
             switch (instructionToExecute.Type)
@@ -102,6 +106,39 @@ namespace AOC2017.Logic
                     }
                     break;
             }
+        }
+
+
+        public void SetValueReceiver(Duet2Computer receiver)
+        {
+            _valuesReceiver = receiver;
+        }
+
+        public int GetValuesSentCounter() => _valuesSentCounter;
+
+        /// <summary>
+        /// Resumes a waiting program
+        /// </summary>
+        /// <returns>The number of commmand that were executed</returns>
+        public int ResumeProgram()
+        {
+            int numOfCommandsExecuted = 0;
+
+            if (_valuesQueue.Any() && _state == Duet2ComputerState.Waiting)
+            {
+                _state = Duet2ComputerState.Running;
+            }
+
+            Duet2ComputerInstruction instructionToExecute = GetNextInstructionToExecute();
+
+            while (instructionToExecute != null)
+            {
+                ExecuteInsturction(instructionToExecute);
+                numOfCommandsExecuted++;
+                instructionToExecute = GetNextInstructionToExecute();
+            }
+
+            return numOfCommandsExecuted;
         }
     }
 }

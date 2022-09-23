@@ -32,6 +32,26 @@ namespace AOC2017.PuzzleSolvers
             var computer1 = new Duet2Computer(parser, 1);
 
 
+            computer0.SetValueReceiver(computer1);
+            computer1.SetValueReceiver(computer0);
+
+            computer0.LoadProgram(programLines);
+            computer1.LoadProgram(programLines);
+
+            computer0.ExcuteProgram();
+            computer1.ExcuteProgram();
+
+            int numOfCommandsExecuted;
+            do
+            {
+                numOfCommandsExecuted = 0;
+                numOfCommandsExecuted += computer0.ResumeProgram();
+                numOfCommandsExecuted += computer1.ResumeProgram();
+
+
+            } while (numOfCommandsExecuted > 0);
+
+
 
             return computer1.GetValuesSentCounter().ToString();
         }
