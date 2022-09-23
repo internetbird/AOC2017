@@ -6,16 +6,15 @@ using System.Threading.Tasks;
 
 namespace AOC2017.Models
 {
-    public enum DuetComputerInstructionType
+    public enum Duet2ComputerInstructionType
     {
         NotSet,
-        PlaySound,
+        Send,
         SetValue,
         Add,
         Multiply,
         Modulo,
-        RecoverFrequency,
+        Receive,
         JumpGreaterThenZero
-
     }
 }

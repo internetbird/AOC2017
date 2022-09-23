@@ -8,38 +8,38 @@ using System.Threading.Tasks;
 
 namespace AOC2017.Parsers
 {
-    public class DuetComputerInstructionParser : IComputerInstructionParser<DuetComputerInstruction, DuetComputerInstructionType>
+    public class Duet2ComputerInstructionParser : IComputerInstructionParser<Duet2ComputerInstruction, Duet2ComputerInstructionType>
     {
-        public DuetComputerInstruction ParseInstruction(string line)
+        public Duet2ComputerInstruction ParseInstruction(string line)
         {
-            var instruction = new DuetComputerInstruction();
+            var instruction = new Duet2ComputerInstruction();
 
             string[] instructionParts = line.Split();
 
-            DuetComputerInstructionType type = DuetComputerInstructionType.NotSet;
+            Duet2ComputerInstructionType type = Duet2ComputerInstructionType.NotSet;
 
             switch (instructionParts[0])
             {
                 case "set":
-                    type = DuetComputerInstructionType.SetValue;
+                    type = Duet2ComputerInstructionType.SetValue;
                     break;
                 case "snd":
-                    type = DuetComputerInstructionType.PlaySound;
+                    type = Duet2ComputerInstructionType.Send;
                     break;
                 case "add":
-                    type = DuetComputerInstructionType.Add;
+                    type = Duet2ComputerInstructionType.Add;
                     break;
                 case "mul":
-                    type = DuetComputerInstructionType.Multiply;
+                    type = Duet2ComputerInstructionType.Multiply;
                     break;
                 case "mod":
-                    type = DuetComputerInstructionType.Modulo;
+                    type = Duet2ComputerInstructionType.Modulo;
                     break;
                 case "rcv":
-                    type = DuetComputerInstructionType.RecoverFrequency;
+                    type = Duet2ComputerInstructionType.Receive;
                     break;
                 case "jgz":
-                    type = DuetComputerInstructionType.JumpGreaterThenZero;
+                    type = Duet2ComputerInstructionType.JumpGreaterThenZero;
                     break;
 
             }

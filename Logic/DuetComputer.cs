@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace AOC2017.Logic
 {
-    public class DuetComputer : ComputerSimulator<DuetComputerInstruction, DuetComputerInstuctionType>
+    public class DuetComputer : ComputerSimulator<DuetComputerInstruction, DuetComputerInstructionType>
     {
 
         private long? _lastFrequencyPlayed = null;
@@ -21,35 +21,35 @@ namespace AOC2017.Logic
         {
             switch (instructionToExecute.Type)
             {
-                case DuetComputerInstuctionType.PlaySound:
+                case DuetComputerInstructionType.PlaySound:
                     long frequencyToPlay = GetOperandValue(instructionToExecute.Operand1);
                     _lastFrequencyPlayed = frequencyToPlay;
                     _programCounter++;
                     break;
-                case DuetComputerInstuctionType.SetValue:
+                case DuetComputerInstructionType.SetValue:
                     long valueToSet = GetOperandValue(instructionToExecute.Operand2);
                     SetRegisterValue(instructionToExecute.Operand1, valueToSet);
                     _programCounter++;
                     break;
-                case DuetComputerInstuctionType.Add:
+                case DuetComputerInstructionType.Add:
                     long valueToAdd = GetOperandValue(instructionToExecute.Operand2);
                     long addedRegsiter = GetRegisterValue(instructionToExecute.Operand1) + valueToAdd;
                     SetRegisterValue(instructionToExecute.Operand1, addedRegsiter);
                     _programCounter++;
                     break;
-                case DuetComputerInstuctionType.Multiply:
+                case DuetComputerInstructionType.Multiply:
                     long valueToMultiply = GetOperandValue(instructionToExecute.Operand2);
                     long multipliedRegister = GetRegisterValue(instructionToExecute.Operand1) * valueToMultiply;
                     SetRegisterValue(instructionToExecute.Operand1, multipliedRegister);
                     _programCounter++;
                     break;
-                case DuetComputerInstuctionType.Modulo:
+                case DuetComputerInstructionType.Modulo:
                     long valueToModulo = GetOperandValue(instructionToExecute.Operand2);
                     long moduloRegister = GetRegisterValue(instructionToExecute.Operand1) % valueToModulo;
                     SetRegisterValue(instructionToExecute.Operand1, moduloRegister);
                     _programCounter++;
                     break;
-                case DuetComputerInstuctionType.RecoverFrequency:
+                case DuetComputerInstructionType.RecoverFrequency:
                     long valueToRecoverFrequency = GetOperandValue(instructionToExecute.Operand1);
                     if (valueToRecoverFrequency != 0 && _firstRecoveredFrequency == null)
                     {
@@ -61,7 +61,7 @@ namespace AOC2017.Logic
                     }
                    
                     break;
-                case DuetComputerInstuctionType.JumpGreaterThenZero:
+                case DuetComputerInstructionType.JumpGreaterThenZero:
                     long checkGreaterThenZero = GetOperandValue(instructionToExecute.Operand1);
                     if (checkGreaterThenZero > 0)
                     {

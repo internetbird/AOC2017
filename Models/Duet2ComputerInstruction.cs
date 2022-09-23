@@ -7,9 +7,9 @@ using System.Threading.Tasks;
 
 namespace AOC2017.Models
 {
-    public class DuetComputerInstruction : IComputerInstruction<DuetComputerInstructionType>
+    public class Duet2ComputerInstruction : IComputerInstruction<Duet2ComputerInstructionType>
     {
-        public DuetComputerInstructionType Type { get; set; }
+        public Duet2ComputerInstructionType Type { get; set; }
         public string Operand1 { get; set; }
         public string Operand2 { get; set; }
     }
