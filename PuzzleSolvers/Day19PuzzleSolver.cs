@@ -20,12 +20,17 @@ namespace AOC2017.PuzzleSolvers
             var scanner = new RoutingDiagramScanner();
             var answer = scanner.ScanLetters(inputLines);
 
-            return answer;
+            return answer.letters;
         }
 
         public string SolvePuzzlePart2()
         {
-            throw new NotImplementedException();
+            string[] inputLines = InputFilesHelper.GetInputFileLines("day19.txt");
+
+            var scanner = new RoutingDiagramScanner();
+            var answer = scanner.ScanLetters(inputLines);
+
+            return answer.numOfSteps.ToString(); ;
         }
     }
 }

@@ -18,9 +18,10 @@ namespace AOC2017.Logic
 
         private char CurrentChar => _inputLines[_currRowIndex][_currColumnIndex];
 
-        public string ScanLetters(string[] inputLines)
+        public (string letters, int numOfSteps) ScanLetters(string[] inputLines)
         {
-            var letters = string.Empty;
+            string letters = string.Empty;
+            int numOfSteps = 1;
 
             _inputLines = inputLines;
             _currRowIndex = 0;
@@ -29,12 +30,14 @@ namespace AOC2017.Logic
 
             while(MoveToNextPosition())
             {
+                numOfSteps++;
+
                 if (Regex.IsMatch(CurrentChar.ToString(), "[A-Z]"))
                 {
                     letters += CurrentChar;
                 }
             }
-            return letters;
+            return (letters, numOfSteps);
         }
 
         private bool MoveToNextPosition()
