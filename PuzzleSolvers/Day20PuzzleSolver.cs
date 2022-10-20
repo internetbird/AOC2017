@@ -1,4 +1,5 @@
 ﻿using AOC;
+using AOC2017.Logic;
 using AOC2017.Models;
 using AOC2017.Parsers;
 using System;
@@ -45,7 +46,14 @@ namespace AOC2017.PuzzleSolvers
 
         public string SolvePuzzlePart2()
         {
-            throw new NotImplementedException();
+            string[] lines = InputFilesHelper.GetInputFileLines("day20.txt");
+
+            List<ParticleData> particles = ParticleDataParser.ParseRows(lines);
+            var simulator = new ParticleSimulator(particles);
+
+            int particlesLeft = simulator.RumSimulation(1000);
+
+            return particlesLeft.ToString();
         }
     }
 }
