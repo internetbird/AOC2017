@@ -9,7 +9,7 @@ namespace AOC2017.Logic
 {
     public class FractalGridRule
     {
-        public Grid<bool> SourceGrid { get; set; }
+        public List<Grid<bool>> SourceGrids { get; set; }
         public Grid<bool> DestinationGrid { get; set; }
     }
 }

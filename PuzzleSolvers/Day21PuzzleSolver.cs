@@ -23,7 +23,13 @@ namespace AOC2017.PuzzleSolvers
 
         public string SolvePuzzlePart2()
         {
-            throw new NotImplementedException();
+            string[] ruleLines = InputFilesHelper.GetInputFileLines("day21.txt");
+
+            var grid = new FractalGrid(ruleLines);
+
+            grid.RunInterations(18);
+
+            return grid.GetNumOfOnPixels().ToString();
         }
     }
 }
