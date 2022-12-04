@@ -1,4 +1,5 @@
-﻿using BirdLib.DataModels;
+﻿using AOC2017.Models;
+using BirdLib.DataModels;
 using BirdLib.Enums;
 using BirdLib.ExtensionMethods;
 using System;
@@ -14,11 +15,18 @@ namespace AOC2017.Logic
     public class SproficaVirusSimulator
     {
         private Grid<bool> _nodesNetwork;
+        private Grid<VirusNodeState> _nodesNetwork2;
         private int _currentRowIndex;
         private int _currentColumnIndex;
         private Direction _currentDirection;
         private int _infectionsCounter;
-        private const int NetworkSize = 125;
+        private readonly int _networkSize;
+
+
+        public SproficaVirusSimulator(int networkSize = 125)
+        {
+            _networkSize = networkSize;
+        }
 
 
         public int RunSimulation(Grid<bool> initialGrid, int numOfBursts)
@@ -28,8 +36,8 @@ namespace AOC2017.Logic
             _infectionsCounter = 0;
 
             InitNodesNetwork(initialGrid);
-            _currentRowIndex = NetworkSize / 2;
-            _currentColumnIndex = NetworkSize / 2;
+            _currentRowIndex = _networkSize / 2;
+            _currentColumnIndex = _networkSize / 2;
             _currentDirection = Direction.Up;
 
             while (burstCounter < numOfBursts)
@@ -57,10 +65,60 @@ namespace AOC2017.Logic
 
         }
 
+        public int RunSimulation2(Grid<VirusNodeState> initialGrid, int numOfBursts)
+        {
+            int burstCounter = 0;
+            _infectionsCounter = 0;
+
+            InitNodesNetwork2(initialGrid);
+
+            _currentRowIndex = _networkSize / 2;
+            _currentColumnIndex = _networkSize / 2;
+            _currentDirection = Direction.Up;
+
+            while (burstCounter < numOfBursts)
+            {
+                VirusNodeState currentNodeState = _nodesNetwork2.GetItem(_currentRowIndex, _currentColumnIndex);
+
+
+                switch(currentNodeState)
+                {
+                    case VirusNodeState.Clean:
+                        _currentDirection = _currentDirection.TurnLeft();
+                        _nodesNetwork2.SetItem(VirusNodeState.Weakended, _currentRowIndex, _currentColumnIndex);
+
+                        break;
+                    case VirusNodeState.Weakended:
+                        _nodesNetwork2.SetItem(VirusNodeState.Infected, _currentRowIndex, _currentColumnIndex);
+                        _infectionsCounter++;
+                        break;
+                    case VirusNodeState.Infected:
+                        _currentDirection = _currentDirection.TurnRight();
+                        _nodesNetwork2.SetItem(VirusNodeState.Flagged, _currentRowIndex, _currentColumnIndex);
+                        break;
+                    case VirusNodeState.Flagged:
+                        _currentDirection = _currentDirection.Reverse();
+                        _nodesNetwork2.SetItem(VirusNodeState.Clean, _currentRowIndex, _currentColumnIndex);
+                        break;
+                }
+
+                MoveToNextNode();
+                burstCounter++;
+            }
+
+            return _infectionsCounter;
+        }
+
+        private void InitNodesNetwork2(Grid<VirusNodeState> initialGrid)
+        {
+            _nodesNetwork2 = new Grid<VirusNodeState>(_networkSize, _networkSize);
+            _nodesNetwork2.SetSubGrid((_networkSize - 25) / 2, (_networkSize - 25) / 2, initialGrid);
+        }
+
         private void InitNodesNetwork(Grid<bool> initialGrid)
         {
-            _nodesNetwork = new Grid<bool>(NetworkSize, NetworkSize);
-            _nodesNetwork.SetSubGrid((NetworkSize-25)/2, (NetworkSize-25)/2, initialGrid);
+            _nodesNetwork = new Grid<bool>(_networkSize, _networkSize);
+            _nodesNetwork.SetSubGrid((_networkSize-25)/2, (_networkSize-25)/2, initialGrid);
         }
 
         private void MoveToNextNode()
