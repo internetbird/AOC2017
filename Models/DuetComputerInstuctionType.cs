@@ -12,10 +12,12 @@ namespace AOC2017.Models
         PlaySound,
         SetValue,
         Add,
+        Subtruct,
         Multiply,
         Modulo,
         RecoverFrequency,
-        JumpGreaterThenZero
+        JumpGreaterThenZero,
+        JumpNotZero
 
     }
 }

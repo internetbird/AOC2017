@@ -41,6 +41,12 @@ namespace AOC2017.Parsers
                 case "jgz":
                     type = DuetComputerInstructionType.JumpGreaterThenZero;
                     break;
+                case "jnz":
+                    type = DuetComputerInstructionType.JumpNotZero;
+                    break;
+                case "sub":
+                    type = DuetComputerInstructionType.Subtruct;
+                    break;
 
             }
 

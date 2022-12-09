@@ -14,6 +14,7 @@ namespace AOC2017.Logic
 
         private long? _lastFrequencyPlayed = null;
         private long? _firstRecoveredFrequency = null;
+        private long _mulInstunctionCounter = 0;
 
         public DuetComputer(DuetComputerInstructionParser parser) : base(parser){}
 
@@ -37,10 +38,17 @@ namespace AOC2017.Logic
                     SetRegisterValue(instructionToExecute.Operand1, addedRegsiter);
                     _programCounter++;
                     break;
+                case DuetComputerInstructionType.Subtruct:
+                    long valueToSubtruct = GetOperandValue(instructionToExecute.Operand2);
+                    long subtrcutResult = GetRegisterValue(instructionToExecute.Operand1) - valueToSubtruct;
+                    SetRegisterValue(instructionToExecute.Operand1, subtrcutResult);
+                    _programCounter++;
+                    break;
                 case DuetComputerInstructionType.Multiply:
                     long valueToMultiply = GetOperandValue(instructionToExecute.Operand2);
                     long multipliedRegister = GetRegisterValue(instructionToExecute.Operand1) * valueToMultiply;
                     SetRegisterValue(instructionToExecute.Operand1, multipliedRegister);
+                    _mulInstunctionCounter++;
                     _programCounter++;
                     break;
                 case DuetComputerInstructionType.Modulo:
@@ -71,10 +79,22 @@ namespace AOC2017.Logic
                         _programCounter++;
                     }
                 break;
+                case DuetComputerInstructionType.JumpNotZero:
+                    long checkNotZero = GetOperandValue(instructionToExecute.Operand1);
+                    if (checkNotZero !=  0)
+                    {
+                        _programCounter += (int)GetOperandValue(instructionToExecute.Operand2);
+                    }
+                    else
+                    {
+                        _programCounter++;
+                    }
+                    break;
             }
         }
 
         public long GetFirstRecoveredFrequency() => _firstRecoveredFrequency.Value;
+        public long GetMulInstunctionInvokeCounter() => _mulInstunctionCounter;
 
     }
 }
