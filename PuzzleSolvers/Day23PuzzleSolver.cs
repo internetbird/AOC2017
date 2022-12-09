@@ -26,7 +26,15 @@ namespace AOC2017.PuzzleSolvers
 
         public string SolvePuzzlePart2()
         {
-            throw new NotImplementedException();
+            string[] programLines = InputFilesHelper.GetInputFileLines("day23.txt");
+
+            var parser = new DuetComputerInstructionParser();
+            var computer = new CoprocessorComputer(parser);
+
+            computer.LoadProgram(programLines);
+            computer.ExcuteProgram(true);
+
+            return computer.GetResultRegisterValue().ToString();
         }
     }
 }
