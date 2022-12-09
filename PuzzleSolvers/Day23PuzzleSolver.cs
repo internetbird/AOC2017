@@ -26,13 +26,23 @@ namespace AOC2017.PuzzleSolvers
 
         public string SolvePuzzlePart2()
         {
-            string[] programLines = InputFilesHelper.GetInputFileLines("day23.txt");
+            string[] programLines = InputFilesHelper.GetInputFileLines("day23.test.txt");
 
             var parser = new DuetComputerInstructionParser();
             var computer = new CoprocessorComputer(parser);
 
             computer.LoadProgram(programLines);
-            computer.ExcuteProgram(true);
+
+
+            computer.OnAfterInstructionExecuted += (sender, args) =>
+            {
+                if (computer.GetResultRegisterValue() != 0)
+                {
+                    Console.WriteLine("Register h equals :" + computer.GetResultRegisterValue());
+                }
+            };
+
+            computer.ExcuteProgram();
 
             return computer.GetResultRegisterValue().ToString();
         }
